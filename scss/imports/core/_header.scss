@@ -1,0 +1,207 @@
+// css header
+
+header {
+  --heightHeader: 80px;
+  width: 100%;
+  height: var(--heightHeader);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  .container-fluid {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: $text-black-cl;
+    opacity: 0.7;
+    .logo {
+      img {
+        width: 170px;
+      }
+      .hidden {
+        display: none;
+      }
+    }
+    .menu {
+      height: 100%;
+      display: flex;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%); //Di chuyển sang trái 50%, theo trục x
+      // padding-top: 30px;
+      li {
+        height: 100%;
+        a {
+          height: 100%;
+          margin: 0 18px; //top-bottom right-left
+          @include mid(true);
+          @include text(16px, $font-main, normal, $white-cl, uppercase);
+          position: relative; //cha
+          @include transition($t);
+          overflow: hidden; //nằm trong li chứa nó
+          &::after {
+            content: "";
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            position: absolute;
+            left: 0;
+            bottom: 25px;
+            @include transform(scaleX(0));
+            @include transform-origin(left center); //chạy từ bên trái qua!!!
+            @include transform($t cubic-bezier(0.93, 0.02, 0.48, 0.91));
+          }
+          &:hover {
+            // opacity: 0.5;
+            @include transition($t);
+            color: $yellow-cl;
+            &:after {
+              @include transform(scaleX(1));
+              @include transform-origin(right center);
+              @include transition($t cubic-bezier(0.93, 0.02, 0.48, 0.91));
+            }
+          }
+        }
+      }
+    }
+    .right {
+      display: inline-flex;
+      // .nav{
+
+      //     width: 100vw;
+      //     height: 100vh;
+      //     background: $black-cl;
+      //     position: fixed;
+      //     top: 0;
+      //     left: 0;
+      //     @include transform(initial);
+      //     z-index: 200;
+      //     @include text(16px, $font-main, normal, $white-cl, uppercase);
+      //     opacity: 1;
+      //     // pointer-events: none;
+      //     @include transition(opacity 0.3s);
+      //     ul {
+      //       flex-direction: column;
+      //       @include mid(false);
+      //       li{
+      //         margin: 15px auto;
+      //         a{
+      //           color:$white-cl;
+      //         }
+      //       }
+      //     }
+      //     &.active {
+      //       opacity: 1;
+      //       pointer-events: auto;
+      //       @include transition(opacity 0.3s)
+      //     }
+      //   }
+      .lang {
+        height: 100%;
+        @include mid(true);
+        position: relative;
+        @include text(16px, $font-main, normal, $white-cl, uppercase);
+        margin-right: 20px;
+        &__current {
+          display: inline-flex;
+          cursor: pointer;
+          i {
+            @include mid(true);
+            margin-left: 8px;
+            img {
+              width: 12px;
+            }
+          }
+        }
+        &__option {
+          display: flex;
+          flex-direction: column;
+          width: 90px;
+          height: auto;
+          background: $yellow-cl;
+          padding: 30px;
+          position: absolute;
+          right: 0;
+          top: 30px;
+          text-align: right;
+          display: none; //dùng để ẩn js
+          a {
+            color: $text-cl;
+          }
+        }
+        &:hover {
+          .lang__option {
+            display: block; //dùng để hiển thị
+          }
+        }
+      }
+      .btnmenu {
+        display: none;
+        width: 40px;
+        height: 22px;
+        position: relative;
+        z-index: 300;
+        cursor: pointer;
+        margin-left: 20px;
+        span {
+          width: 100%;
+          height: 2px;
+          display: block;
+          background: $yellow-cl;
+          position: absolute;
+          top: 50%;
+          @include transform(translateY(-50%));
+          @include transition(0.3s);
+        }
+        &:before,
+        &:after {
+          content: "";
+          width: 100%;
+          height: 2px;
+          display: block;
+          background: $yellow-cl;
+          @include transform(rotate(0deg) translateY(0px));
+          @include transition(transform 0.3s);
+        }
+        &:after {
+          position: absolute;
+          bottom: 0;
+        }
+        &.clicker {
+          &:before {
+            @include transform(rotate(45deg) translate(6px, 8px));
+            @include transition(transform 0.3s);
+          }
+          span {
+            opacity: 0;
+            @include transition(0.3s);
+          }
+          &::after {
+            @include transform(rotate(-45deg) translate(4px, -8px));
+            @include transition(transform 0.3s);
+          }
+        }
+      }
+    }
+  }
+  @include xs {
+    .container-fluid {
+      .menu {
+        display: none;
+      }
+      .right {
+        .btnmenu {
+          display: block;
+        }
+      }
+    }
+  }
+
+  @include xs {
+    --heightHeader: 50px;
+    .btnmenu {
+      display: block;
+    }
+  }
+}
